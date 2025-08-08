@@ -1,0 +1,10 @@
+# No changes needed unless you change the name of the frontend
+# and it is references from ingress.yaml
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: redirect-config
+spec:
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT

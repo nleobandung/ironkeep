@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game
+spec:
+  replicas: 1   # pods 
+  selector:
+    matchLabels:
+      app: game
+  template:
+    metadata:
+      labels:
+        app: game
+    spec:
+      containers:
+      - name: frontend
+        image: us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/frontend:latest   #v1 is deterministic
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4173  # port that container listens on
+      - name: backend
+        image: us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/backend:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: game-secrets
+              key: MONGO_URI
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: game-secrets
+              key: JWT_SECRET
+      - name: redis
+        image: redis
+        ports:
+          - containerPort: 6379

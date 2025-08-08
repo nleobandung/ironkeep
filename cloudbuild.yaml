@@ -1,0 +1,30 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/frontend:latest', './frontend']
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/backend:latest', './backend']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/frontend:latest']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/backend:latest']
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-west1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=ironkeep'
+    args: ['apply', '-f', './k8s/']
+  
+  - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-west1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=ironkeep'
+    args: ['rollout', 'restart', 'deployment/game']
+
+images:
+  - 'us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/frontend:latest'
+  - 'us-west1-docker.pkg.dev/cs144-25s-team24/cs144-groupproject/backend:latest'
+
+logsBucket: gs://ironkeep
