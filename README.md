@@ -1,6 +1,6 @@
 # Overview
 This application is a MERN full-stack logic-shooter game where players will have to decide where to place their shooters so they can attack their enemies and deduct off their life-span before the enemies escape alive. We used React+Vite on the frontend, Node, on the backend, Express for our api endpoints, and a ODM, Mongodb for our database along with Redis for caching. Other features such as PWA, Bycrypt, Cookies, and JWT is also used. Both frondend and backend have their respective Dockerfiles and Kubernetes manifests.
-![image](https://github.com/user-attachments/assets/a1f49055-7607-42df-ae41-8a2cd3508990)
+<img width="439" height="293" alt="Screenshot 2025-09-24 at 11 43 41 PM" src="https://github.com/user-attachments/assets/6c9d713c-92f7-4011-9290-8df17223d876" />
 
 ## Testing on Local (not recommended)
 Here are instructions to run our app locally. Note that the current codebase is tailored towards GKE deployment, so not all functionality will work.
